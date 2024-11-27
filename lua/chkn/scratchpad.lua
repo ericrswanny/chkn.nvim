@@ -18,11 +18,6 @@ function M.setup(user_config)
 end
 
 function M.open()
-	-- Check if the scratchpad is already open
-	if state.win then
-		print("state.win:", state.win)
-		print("Is window valid?", vim.api.nvim_win_is_valid(state.win))
-	end
 	if state.win and vim.api.nvim_win_is_valid(state.win) then
 		-- If the window exists, close it
 		vim.api.nvim_win_close(state.win, true)
