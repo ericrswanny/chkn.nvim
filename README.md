@@ -16,21 +16,27 @@
 Using [lazy.nvim](https://github.com/folke/lazy.nvim):
 
 ```lua
-{
-    "ericrswanny/chkn.nvim",
-    config = function()
-        require("chkn").setup({
-            width = 80,
-            height = 20,
-            border = "rounded",
-            persistent = true,
-        })
-    end,
-    keys = {
-        { "<leader>sp", function() require("chkn.scratchpad").open() end, desc = "Open Scratchpad" },
+return {
+  "ericrswanny/chkn.nvim",
+  branch = "feat/chkntoggle",
+  config = function()
+    require("chkn").setup({
+      width = 80,
+      height = 20,
+      border = "rounded",
+      persistent = true,
+    })
+  end,
+  keys = {
+    {
+      "<leader>sp",
+      function()
+        vim.cmd("ChknToggle")
+      end,
+      desc = "Toggle Scratchpad",
     },
+  },
 }
-
 ```
 
 ericrswanny
