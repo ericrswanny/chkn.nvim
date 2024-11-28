@@ -30,13 +30,12 @@ return {
   keys = {
     {
       "<leader>sp",
-      function()
-        vim.cmd("ChknToggle")
-      end,
+      ":ChknToggle<CR>",
       desc = "Toggle Scratchpad",
     },
   },
 }
+
 ```
 
 ericrswanny
