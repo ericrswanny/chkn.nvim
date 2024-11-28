@@ -27,6 +27,7 @@ return {
       persistent = true,
     })
   end,
+  lazy = false,
   keys = {
     {
       "<leader>sp",
