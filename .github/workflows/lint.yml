@@ -1,0 +1,28 @@
+name: Lint Code
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "lua/**"
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install stylua
+        run: |
+          curl -L -o stylua https://github.com/JohnnyMorganz/StyLua/releases/latest/download/stylua-linux-x86_64
+          chmod +x stylua
+          sudo mv stylua /usr/local/bin/
+
+      - name: Run stylua
+        run: stylua --check lua/
