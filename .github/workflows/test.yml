@@ -17,12 +17,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Install dependencies
+      - name: Install Neovim
         run: |
           sudo apt-get update
-          sudo apt-get install -y neovim git
-          mkdir -p ~/.local/share/nvim/site/pack/plugins/start
-          git clone https://github.com/nvim-lua/plenary.nvim ~/.local/share/nvim/site/pack/plugins/start/plenary.nvim
+          sudo apt-get install -y software-properties-common
+          sudo add-apt-repository ppa:neovim-ppa/stable -y
+          sudo apt-get update
+          sudo apt-get install -y neovim
 
       - name: Run Tests
         run: |
