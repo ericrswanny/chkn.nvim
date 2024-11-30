@@ -15,11 +15,30 @@
 
 Using [lazy.nvim](https://github.com/folke/lazy.nvim):
 Add the following to `plugins/chkn.lua`, then run `:Lazy sync` and restart Neovim.
+With defualt configuration:
 
 ```lua
 return {
   "ericrswanny/chkn.nvim",
-  branch = "feat/chkntoggle",
+  config = function()
+    require("chkn").setup() -- Use the default configuration
+  end,
+  lazy = false,
+  keys = {
+    {
+      "<leader>sp",
+      ":ChknToggle<CR>",
+      desc = "Toggle Scratchpad",
+    },
+  },
+}
+```
+
+With custom configuration:
+
+```lua
+return {
+  "ericrswanny/chkn.nvim",
   config = function()
     require("chkn").setup({
       width = 80,
@@ -37,21 +56,44 @@ return {
     },
   },
 }
-
 ```
 
 ## Development
 
-To get started developing, add the following line after the git URL in your `plugins/chkn.lua` file:
+To get started developing, checkout the project and set the dependency directory to your local dev checkout of the project. And add a plenary dependency to the project.
 
 ```lua
+return {
+  -- Use a local development path instead of the GitHub repository
+  dir = "~/dev/chkn.nvim", -- Replace this with the path to your dev dir
   dependencies = { "nvim-lua/plenary.nvim" }, -- plenary for tests
+  config = function()
+    require("chkn").setup() -- Use the default
+  -- Or use this if you would like custom configuration
+  -- config = function()
+  --   require("chkn").setup({
+  --     width = 80,
+  --     height = 20,
+  --     border = "rounded",
+  --     persistent = true,
+  --   })
+  end,
+  lazy = false,
+  keys = {
+    {
+      "<leader>sp",
+      ":ChknToggle<CR>",
+      desc = "Toggle Scratchpad",
+    },
+  },
+}
 ```
 
 Run tests with `./run_tests.sh`
 
 GitHub actions can be run locally using `act`.
 
+- `act`
 - `act -j test`
 
 ericrswanny
