@@ -48,4 +48,10 @@ To get started developing, add the following line after the git URL in your `plu
   dependencies = { "nvim-lua/plenary.nvim" }, -- plenary for tests
 ```
 
+Run tests with `./run_tests.sh`
+
+GitHub actions can be run locally using `act`.
+
+- `act -j test`
+
 ericrswanny
