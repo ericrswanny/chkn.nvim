@@ -14,6 +14,7 @@
 ## Installation
 
 Using [lazy.nvim](https://github.com/folke/lazy.nvim):
+Add the following to `plugins/chkn.lua`, then run `:Lazy sync` and restart Neovim.
 
 ```lua
 return {
@@ -37,6 +38,14 @@ return {
   },
 }
 
+```
+
+## Development
+
+To get started developing, add the following line after the git URL in your `plugins/chkn.lua` file:
+
+```lua
+  dependencies = { "nvim-lua/plenary.nvim" }, -- plenary for tests
 ```
 
 ericrswanny
