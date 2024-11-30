@@ -18,7 +18,6 @@ Using [lazy.nvim](https://github.com/folke/lazy.nvim):
 ```lua
 return {
   "ericrswanny/chkn.nvim",
-  branch = "feat/chkntoggle",
   config = function()
     require("chkn").setup({
       width = 80,
@@ -36,7 +35,6 @@ return {
     },
   },
 }
-
 ```
 
 ericrswanny
