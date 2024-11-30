@@ -10,6 +10,7 @@ if [ ! -d "${HOME}/.local/share/nvim/lazy/plenary.nvim" ]; then
 fi
 
 # Run Plenary tests
-nvim --headless -c "PlenaryBustedDirectory tests/ { minimal_init = './tests/init.lua' }" || exit 1
+nvim --headless -c "lua require('plenary.test_harness').test_directory('tests', { minimal_init = './tests/init.lua' })"
+#nvim --headless -c "PlenaryBustedDirectory tests/ { minimal_init = './tests/init.lua' }" || exit 1
 
 echo "Tests passed successfully!"

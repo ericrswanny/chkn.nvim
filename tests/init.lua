@@ -1,5 +1,6 @@
 -- Set runtime path to include the plugin
 vim.cmd("set rtp+=.")
+vim.cmd("set rtp+=~/.local/share/nvim/site/pack/plugins/start/plenary.nvim")
 vim.cmd("set rtp+=~/.local/share/nvim/lazy/plenary.nvim") -- Adjust path as needed
 
 -- Load the scratchpad module and register the ChknToggle command
