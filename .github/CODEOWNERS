@@ -1,0 +1,9 @@
+# Require reviews for changes to core plugin code
+lua/chkn/ @ericrswanny @chkn-name
+
+# Require reviews for changes to workflows
+.github/workflows/ @ericrswanny
+
+# Catch-all for everything else
+* @ericrswanny
+
