@@ -27,7 +27,9 @@ return {
   keys = {
     {
       "<leader>sp",
-      ":ChknToggle<CR>",
+      function()
+        vim.cmd("silent! ChknToggle")
+      end,
       desc = "Toggle Scratchpad",
     },
   },
@@ -51,7 +53,9 @@ return {
   keys = {
     {
       "<leader>sp",
-      ":ChknToggle<CR>",
+      function()
+        vim.cmd("silent! ChknToggle")
+      end,
       desc = "Toggle Scratchpad",
     },
   },
@@ -82,7 +86,9 @@ return {
   keys = {
     {
       "<leader>sp",
-      ":ChknToggle<CR>",
+      function()
+        vim.cmd("silent! ChknToggle")
+      end,
       desc = "Toggle Scratchpad",
     },
   },
