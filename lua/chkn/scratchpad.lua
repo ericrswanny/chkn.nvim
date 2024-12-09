@@ -87,7 +87,7 @@ function M.open()
 
   -- Map 'q' to close the scratchpad
   vim.api.nvim_buf_set_keymap(
-    state.buf,
+    M._state.buf,
     "n",
     "q",
     ":lua require('chkn.scratchpad').close()<CR>",
