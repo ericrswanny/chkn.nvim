@@ -37,19 +37,33 @@ describe("Scratchpad functionality", function()
 		assert.is_true(vim.api.nvim_buf_is_valid(scratchpad._state.buf))
 	end)
 
-	it("should close the scratchpad when 'q' is pressed", function()
-		-- Open the scratchpad
-		scratchpad.open()
-		local state = scratchpad.get_state()
+  it("should close the scratchpad when 'q' is pressed", function()
+      -- Open the scratchpad
+      scratchpad.open()
+      local state = scratchpad.get_state()
 
-		-- Ensure the scratchpad window is open
-		assert.is_not_nil(state.win)
-		assert.is_true(vim.api.nvim_win_is_valid(state.win))
+      -- Ensure the scratchpad window is open
+      assert.is_not_nil(state.win)
+      assert.is_true(vim.api.nvim_win_is_valid(state.win))
 
-		-- Simulate pressing 'q' in the scratchpad buffer
-		vim.api.nvim_feedkeys("q", "n", false)
+      -- Debug keymaps
+      local keymaps = vim.api.nvim_buf_get_keymap(state.buf, "n")
+      local found_q = false
+      for _, map in ipairs(keymaps) do
+          if map.lhs == "q" then
+              found_q = true
+              break
+          end
+      end
+      assert.is_true(found_q, "Keybinding 'q' not found on the scratchpad buffer")
 
-		-- Ensure the scratchpad window is closed
-		assert.is_nil(state.win)
-	end)
+      -- Focus the scratchpad window
+      vim.api.nvim_set_current_win(state.win)
+
+      -- Simulate pressing 'q' in the scratchpad buffer
+      vim.api.nvim_feedkeys("q", "n", false)
+
+      -- Ensure the scratchpad window is closed
+      assert.is_nil(state.win)
+  end)
 end)
