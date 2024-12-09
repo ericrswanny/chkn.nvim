@@ -84,6 +84,22 @@ function M.open()
 
 	-- Set window options
 	vim.api.nvim_win_set_option(M._state.win, "wrap", false)
+
+	-- Map 'q' to close the scratchpad
+	vim.api.nvim_buf_set_keymap(
+		M._state.buf,
+		"n",
+		"q",
+		":lua require('chkn.scratchpad').close()<CR>",
+		{ noremap = true, silent = true, nowait = true }
+	)
+end
+
+function M.close()
+	if M._state.win and vim.api.nvim_win_is_valid(M._state.win) then
+		vim.api.nvim_win_close(M._state.win, true)
+		M._reset_state()
+	end
 end
 
 function M.save(buf)
