@@ -91,7 +91,7 @@ function M.open()
     "n",
     "q",
     ":lua require('chkn.scratchpad').close()<CR>",
-    { noremap = true, silent = true }
+    { noremap = true, silent = true, nowait = true }
   )
 end
 
