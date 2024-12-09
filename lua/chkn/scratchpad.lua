@@ -96,7 +96,6 @@ function M.open()
 end
 
 function M.close()
-  vim.notify("Closing scratchpad!")
   if M._state.win and vim.api.nvim_win_is_valid(M._state.win) then
     vim.api.nvim_win_close(M._state.win, true)
     M._reset_state()
