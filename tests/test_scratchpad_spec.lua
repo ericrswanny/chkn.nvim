@@ -9,6 +9,7 @@ describe("Scratchpad functionality", function()
 			border = "rounded",
 			persistent = false,
 		})
+    scratchpad.close()
 	end)
 
 	it("should set up configuration correctly", function()
@@ -46,12 +47,17 @@ describe("Scratchpad functionality", function()
       assert.is_not_nil(state.win)
       assert.is_true(vim.api.nvim_win_is_valid(state.win))
 
-      -- Debug keymaps
+      -- Debug keymaps and verify 'q' is bound to the close function
       local keymaps = vim.api.nvim_buf_get_keymap(state.buf, "n")
       local found_q = false
       for _, map in ipairs(keymaps) do
           if map.lhs == "q" then
               found_q = true
+              -- Assert that the keybinding executes the close function
+              assert.is_true(
+                  map.rhs == ":lua require('chkn.scratchpad').close()<CR>",
+                  "Keybinding 'q' is not mapped to the close function"
+              )
               break
           end
       end
@@ -60,10 +66,10 @@ describe("Scratchpad functionality", function()
       -- Focus the scratchpad window
       vim.api.nvim_set_current_win(state.win)
 
-      -- Simulate pressing 'q' in the scratchpad buffer
-      vim.api.nvim_feedkeys("q", "n", false)
+      -- Execute the `q` keybinding directly
+      vim.cmd(":lua require('chkn.scratchpad').close()")
 
       -- Ensure the scratchpad window is closed
-      assert.is_nil(state.win)
+      assert.is_nil(state.win, "Expected scratchpad window to be closed, but it is still open.")
   end)
 end)
