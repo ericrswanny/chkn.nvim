@@ -100,6 +100,7 @@ return {
 Run tests with `./run_tests.sh`
 
 GitHub actions can be run locally using `act`.
+- https://github.com/nektos/act
 
 - `act`
 - `act -j test`
