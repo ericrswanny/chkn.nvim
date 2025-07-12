@@ -115,7 +115,11 @@ end
 function M.save(buf, file_ending)
 	if M._config.persistent then
 		local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
-		vim.fn.writefile(lines, M._config.path .. file_ending)
+    if #lines == 1 and lines[1] == "" then
+      os.remove(M._config.path .. file_ending)
+    else
+      vim.fn.writefile(lines, M._config.path .. file_ending)
+    end
 	end
 end
 
