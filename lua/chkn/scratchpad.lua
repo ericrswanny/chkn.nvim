@@ -28,9 +28,14 @@ end
 
 function M.setup(user_config)
 	M._config = vim.tbl_deep_extend("force", M._config, user_config or {})
+  -- to avoid breaking changes, trim the .txt from old configs
+  M._config.path = M._config.path:gsub("%.[%a%d]+$", ".")
 end
 
-function M.open()
+function M.open(file_ending)
+  if file_ending == "" or not file_ending then
+    file_ending = "txt"
+  end
 	if M._state.win and vim.api.nvim_win_is_valid(M._state.win) then
 		-- If the window exists, close it
 		vim.api.nvim_win_close(M._state.win, true)
@@ -42,10 +47,15 @@ function M.open()
 	if not M._state.buf or not vim.api.nvim_buf_is_valid(M._state.buf) then
 		M._state.buf = vim.api.nvim_create_buf(false, true)
 		vim.api.nvim_buf_set_option(M._state.buf, "bufhidden", "wipe")
+    ft = vim.filetype.match({ filename = "." .. file_ending })
+    if not ft then
+      ft = "text"
+    end
+		vim.api.nvim_buf_set_option(M._state.buf, "ft", ft)
 
 		-- Load persistent content if enabled
-		if M._config.persistent and vim.fn.filereadable(M._config.path) == 1 then
-			vim.api.nvim_buf_set_lines(M._state.buf, 0, -1, false, vim.fn.readfile(M._config.path))
+		if M._config.persistent and vim.fn.filereadable(M._config.path .. file_ending) == 1 then
+			vim.api.nvim_buf_set_lines(M._state.buf, 0, -1, false, vim.fn.readfile(M._config.path .. file_ending))
 		end
 
 		-- Set autocommands for persistence
@@ -53,14 +63,14 @@ function M.open()
 			vim.api.nvim_create_autocmd("BufWriteCmd", {
 				buffer = M._state.buf,
 				callback = function()
-					M.save(M._state.buf)
+					M.save(M._state.buf, file_ending)
 				end,
 			})
 
 			vim.api.nvim_create_autocmd("BufWipeout", {
 				buffer = M._state.buf,
 				callback = function()
-					M.save(M._state.buf)
+					M.save(M._state.buf, file_ending)
 				end,
 			})
 		end
@@ -102,10 +112,10 @@ function M.close()
 	end
 end
 
-function M.save(buf)
+function M.save(buf, file_ending)
 	if M._config.persistent then
 		local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
-		vim.fn.writefile(lines, M._config.path)
+		vim.fn.writefile(lines, M._config.path .. file_ending)
 	end
 end
 
