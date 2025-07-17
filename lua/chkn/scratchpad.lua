@@ -51,14 +51,16 @@ function M.open(file_ending)
     if not ft then
       ft = "text"
     end
-		vim.api.nvim_buf_set_option(M._state.buf, "ft", ft)
 
 		-- Load persistent content if enabled
 		if M._config.persistent and vim.fn.filereadable(M._config.path .. file_ending) == 1 then
 			vim.api.nvim_buf_set_lines(M._state.buf, 0, -1, false, vim.fn.readfile(M._config.path .. file_ending))
 		end
 
-    vim.cmd("do BufReadPost")
+    vim.defer_fn(function()
+      vim.cmd("do BufNewFile")
+      vim.api.nvim_buf_set_option(M._state.buf, "ft", ft)
+    end, 10)
 
 		-- Set autocommands for persistence
 		if M._config.persistent then
