@@ -58,6 +58,8 @@ function M.open(file_ending)
 			vim.api.nvim_buf_set_lines(M._state.buf, 0, -1, false, vim.fn.readfile(M._config.path .. file_ending))
 		end
 
+    vim.cmd("do BufReadPost")
+
 		-- Set autocommands for persistence
 		if M._config.persistent then
 			vim.api.nvim_create_autocmd("BufWriteCmd", {
