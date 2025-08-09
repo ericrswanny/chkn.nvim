@@ -60,6 +60,13 @@ return {
       end,
       desc = "Toggle Scratchpad",
     },
+    { -- optional custom filetype
+      "<leader>sm",
+      function()
+        vim.cmd("silent! ChknToggle md")
+      end,
+      desc = "Toggle Markdown Scratchpad",
+    },
   },
 }
 ```
